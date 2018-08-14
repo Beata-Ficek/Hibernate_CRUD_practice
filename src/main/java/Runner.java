@@ -2,6 +2,7 @@ import db.DBHelper;
 import models.Extension;
 import models.File;
 import models.Folder;
+import models.Owner;
 
 import java.util.List;
 
@@ -9,9 +10,12 @@ public class Runner {
 
     public static void main(String[] args) {
 
-        Folder practiceFolder = new Folder("Practice");
+        Owner lizzie = new Owner("Lizzie", "Liz82");
+        DBHelper.save(lizzie);
+
+        Folder practiceFolder = new Folder("Practice", lizzie);
         DBHelper.save(practiceFolder);
-        Folder images = new Folder("Images");
+        Folder images = new Folder("Images", lizzie);
         DBHelper.save(images);
 
         File rubyFile = new File ("Ruby practice", Extension.RB, 5, practiceFolder);
@@ -34,7 +38,8 @@ public class Runner {
         File foundFile = DBHelper.find(File.class, javaFile.getId());
 
         List<File> files = DBHelper.getAll(File.class);
-        List<Folder> folders = DBHelper.getAll(File.class);
+        List<Folder> folders = DBHelper.getAll(Folder.class);
+        List<Owner> owners = DBHelper.getAll(Owner.class);
 
     }
 }
